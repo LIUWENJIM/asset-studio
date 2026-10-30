@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: asset-studio
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/asset_studio?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8}
+    username: ${DB_USER:studio}
+    password: ${DB_PASSWORD:studio}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      # 单文件上限放宽到 10MB，真正的限制按模板的 maxFileSizeBytes 在业务层校验
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+app:
+  storage:
+    # 上传素材与生成结果都放这里，容器里挂 volume
+    root: ${STORAGE_ROOT:./data}
+
+simulation:
+  # 各阶段模拟耗时（毫秒）。轮询间隔 1s，任一阶段至少能被采样一次
+  asset-check-ms: ${SIM_ASSET_CHECK_MS:1200}
+  generating-ms: ${SIM_GENERATING_MS:2500}
+  finalizing-ms: ${SIM_FINALIZING_MS:900}
+  # none | ASSET_CHECK | GENERATING | FINALIZING
+  fail-stage: ${SIM_FAIL_STAGE:none}
+  # 后台线程数：>1 时多任务并行，=1 时排队
+  pool-size: ${SIM_POOL_SIZE:2}
+  queue-capacity: 100
+
+logging:
+  level:
+    dev.liuwenjie.assetstudio: INFO

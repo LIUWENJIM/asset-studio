@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#26301f"/>
+      <stop offset="0.5" stop-color="#3d5130"/>
+      <stop offset="1" stop-color="#1a2118"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d9c07a"/>
+      <stop offset="0.5" stop-color="#93b545"/>
+      <stop offset="1" stop-color="#6d8a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <g opacity="0.16" fill="#d9c07a">
+    <circle cx="120" cy="180" r="3"/><circle cx="680" cy="140" r="2.5"/><circle cx="600" cy="880" r="2"/>
+    <circle cx="160" cy="820" r="2.5"/><circle cx="720" cy="520" r="3"/>
+  </g>
+  <circle cx="400" cy="440" r="210" fill="none" stroke="url(#ring)" stroke-width="14"/>
+  <circle cx="400" cy="440" r="168" fill="#1d261b"/>
+  <g transform="translate(400 440)" fill="#8fa37c" opacity="0.55">
+    <circle cy="-42" r="52"/>
+    <path d="M-96 118 q96 -132 192 0 Z"/>
+  </g>
+  <g font-family="system-ui,-apple-system,sans-serif" text-anchor="middle">
+    <text x="400" y="760" font-size="42" font-weight="600" fill="#eef2e6" letter-spacing="1">AVATAR FRAME</text>
+    <text x="400" y="806" font-size="18" fill="#94a386" letter-spacing="6">RING EDITION</text>
+  </g>
+  <g transform="translate(250 860)" fill="#7f9c3c">
+    <rect width="300" height="2" opacity="0.35"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+# dependencies / builds
+node_modules/
+.next/
+out/
+target/
+build/
+dist/
+*.class
+
+# tooling caches
+.tools/
+.mvn/wrapper/maven-wrapper.jar
+*.log
+
+# runtime data (uploads, generated results)
+data/*
+!data/.gitkeep
+
+# env
+.env
+.env.local
+.env.*.local
+
+# os / ide
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
