@@ -1,0 +1,1 @@
+# 前端没有需要公开托管的静态文件，占位保证 Dockerfile 的 COPY public 可用。

@@ -1,0 +1,4 @@
+# pnpm 11 默认不执行依赖的构建脚本，需要显式允许。
+# unrs-resolver 是 eslint-import-resolver-typescript 的原生解析器。
+allowBuilds:
+  unrs-resolver: true

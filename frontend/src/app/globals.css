@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+
+  /* 深色底 + 橄榄绿强调色，取自参考截图 */
+  --color-canvas: #0a0b09;
+  --color-panel: #12140f;
+  --color-panel-raised: #191c15;
+  --color-line: #262a20;
+  --color-line-strong: #363c2d;
+  --color-ink: #e9eddf;
+  --color-ink-muted: #8b927e;
+  --color-ink-faint: #626857;
+  --color-accent: #93b545;
+  --color-accent-strong: #a9cb58;
+  --color-accent-dim: #6f8a33;
+  --color-danger: #d9734f;
+  --color-warn: #d5a94a;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  }
+
+  /* 保留键盘焦点可见性，鼠标点击不出现描边 */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-strong) transparent;
+  }
+}
