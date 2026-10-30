@@ -24,7 +24,7 @@ public class TemplateService {
     public Template get(String id) {
         Template template = templateMapper.findById(id);
         if (template == null) {
-            throw new ApiException(ErrorCode.TEMPLATE_NOT_FOUND, "template", "模板不存在：" + id);
+            throw new ApiException(ErrorCode.TEMPLATE_NOT_FOUND, "模板不存在：" + id, "template");
         }
         return template;
     }
