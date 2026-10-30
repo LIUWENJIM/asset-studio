@@ -16,3 +16,5 @@ simulation:
   asset-check-ms: 10
   generating-ms: 10
   finalizing-ms: 10
+  # 串行执行，便于验证「排队中的任务不会因为被查询而推进」
+  pool-size: 1

@@ -36,6 +36,8 @@ simulation:
   # 后台线程数：>1 时多任务并行，=1 时排队
   pool-size: ${SIM_POOL_SIZE:2}
   queue-capacity: 100
+  # 运行时调整模拟参数的开发接口开关；正式环境可设 false 关掉
+  dev-api-enabled: ${SIM_DEV_API_ENABLED:true}
 
 logging:
   level:
