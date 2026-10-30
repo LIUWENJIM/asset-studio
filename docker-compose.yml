@@ -1,0 +1,73 @@
+name: asset-studio
+
+# 一条命令拉起前端 + Java 后端 + MySQL：
+#   docker compose up --build
+# 前端 http://localhost:3000
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: asset_studio
+      MYSQL_USER: studio
+      MYSQL_PASSWORD: studio
+      MYSQL_ROOT_PASSWORD: studio-root
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ustudio", "-pstudio", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/asset_studio?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+      DB_USER: studio
+      DB_PASSWORD: studio
+      STORAGE_ROOT: /app/data
+      TZ: Asia/Shanghai
+      # 模拟参数：默认值即可直接演示，也可在 .env 里覆盖
+      SIM_ASSET_CHECK_MS: ${SIM_ASSET_CHECK_MS:-1200}
+      SIM_GENERATING_MS: ${SIM_GENERATING_MS:-2500}
+      SIM_FINALIZING_MS: ${SIM_FINALIZING_MS:-900}
+      SIM_FAIL_STAGE: ${SIM_FAIL_STAGE:-none}
+      SIM_POOL_SIZE: ${SIM_POOL_SIZE:-2}
+    volumes:
+      - storage:/app/data
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/api/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # rewrites 目标在构建期固化，容器内要用服务名
+        BACKEND_ORIGIN: http://backend:8080
+    environment:
+      BACKEND_ORIGIN: http://backend:8080
+      TZ: Asia/Shanghai
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  mysql-data:
+  storage:
