@@ -22,6 +22,10 @@ app:
     # 上传素材与生成结果都放这里，容器里挂 volume
     root: ${STORAGE_ROOT:./data}
 
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
 simulation:
   # 各阶段模拟耗时（毫秒）。轮询间隔 1s，任一阶段至少能被采样一次
   asset-check-ms: ${SIM_ASSET_CHECK_MS:1200}
