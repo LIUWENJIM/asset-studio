@@ -102,18 +102,29 @@ public class ResultImageRenderer {
         g.fillRect(PADDING, PADDING + 18, 34, 4);
 
         g.setColor(new Color(0xE8, 0xED, 0xDF));
-        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        g.drawString("ASSET STUDIO", PADDING, PADDING + 64);
+        drawText(g, "ASSET STUDIO", Font.BOLD, 30, PADDING + 64);
 
         g.setColor(new Color(0x7C, 0x84, 0x74));
-        g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-        g.drawString("Made from your photos", PADDING, PADDING + 88);
+        drawText(g, "Made from your photos", Font.PLAIN, 15, PADDING + 88);
     }
 
     private void drawFooter(Graphics2D g) {
         g.setColor(new Color(0x5E, 0x66, 0x56));
-        g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-        g.drawString("generated offline by asset-studio", PADDING, HEIGHT - PADDING + 18);
+        drawText(g, "generated offline by asset-studio", Font.PLAIN, 14, HEIGHT - PADDING + 18);
+    }
+
+    /**
+     * 绘制说明文字。容器镜像里没有安装系统字体，此时 Java2D 画不出字形，
+     * 但结果图本身的图片合成不受影响，所以这里按「有字体就画、没有就跳过」处理，
+     * 避免为了几行装饰文字而在镜像里引入 apt 依赖。
+     */
+    private void drawText(Graphics2D g, String text, int style, int size, int baselineY) {
+        try {
+            g.setFont(new Font(Font.SANS_SERIF, style, size));
+            g.drawString(text, PADDING, baselineY);
+        } catch (RuntimeException ignored) {
+            // 缺少可用字体时静默跳过，不影响结果图产出。
+        }
     }
 
     /** 按素材数量选择版式：1 张铺满，2 张上下分栏，3 张及以上上大下小。 */

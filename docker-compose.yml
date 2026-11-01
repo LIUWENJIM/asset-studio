@@ -6,7 +6,7 @@ name: asset-studio
 
 services:
   mysql:
-    image: mysql:8.4
+    image: mysql:8.0
     environment:
       MYSQL_DATABASE: asset_studio
       MYSQL_USER: studio
@@ -26,7 +26,11 @@ services:
       start_period: 20s
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        # 默认走 Maven Central；国内网络可在 .env 里覆盖成镜像站
+        MAVEN_MIRROR: ${MAVEN_MIRROR:-}
     environment:
       DB_URL: jdbc:mysql://mysql:3306/asset_studio?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8
       DB_USER: studio
@@ -47,7 +51,8 @@ services:
       mysql:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/api/health"]
+      # 运行镜像里没有 curl，用 bash 的 /dev/tcp 探测端口。
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080 || exit 1"]
       interval: 5s
       timeout: 5s
       retries: 30
@@ -59,6 +64,8 @@ services:
       args:
         # rewrites 目标在构建期固化，容器内要用服务名
         BACKEND_ORIGIN: http://backend:8080
+        # 默认走 npm 官方源；国内网络可在 .env 里覆盖成镜像站
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
     environment:
       BACKEND_ORIGIN: http://backend:8080
       TZ: Asia/Shanghai

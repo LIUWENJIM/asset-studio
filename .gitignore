@@ -17,6 +17,12 @@ dist/
 data/*
 !data/.gitkeep
 
+# local verification scratch (screenshots, logs, temp uploads)
+.verify/
+
+# 本地协作规范（含内部工作约定，不进交付仓库）
+/AGENTS.md
+
 # env
 .env
 .env.local
