@@ -158,7 +158,7 @@ export function StudioWorkbench({ template }: { template: Template }) {
   const readyCount = slots.filter((slot) => slot.status === "ready").length;
 
   return (
-    <div className="grid gap-6 pt-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+    <div className="grid gap-6 pt-6 lg:grid-cols-[minmax(0,1fr)_420px]">
       <section aria-labelledby="studio-title" className="min-w-0">
         <Link
           href="/"

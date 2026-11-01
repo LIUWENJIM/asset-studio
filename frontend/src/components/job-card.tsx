@@ -63,23 +63,19 @@ export function JobCard({ job }: { job: Job }) {
           </div>
         )}
 
-        <span className="absolute left-2 top-2">
-          <StatusBadge status={job.status} stage={job.stage} />
-        </span>
-      </div>
-
-      <div className="space-y-2 p-3">
-        <div className="flex items-baseline justify-between gap-2">
-          <h3 className="truncate text-xs font-medium text-ink">
-            {job.templateTitle}
-          </h3>
-          <time
-            dateTime={job.createdAt}
-            className="shrink-0 text-[10px] text-ink-faint"
-          >
-            {formatDateTime(job.createdAt)}
-          </time>
         </div>
+
+      <div className="space-y-1.5 p-3">
+        <StatusBadge status={job.status} stage={job.stage} />
+        <h3 className="truncate text-xs font-medium text-ink">
+          {job.templateTitle}
+        </h3>
+        <time
+          dateTime={job.createdAt}
+          className="block text-[10px] text-ink-faint"
+        >
+          {formatDateTime(job.createdAt)}
+        </time>
 
         <StageTrack
           status={job.status}
@@ -88,9 +84,7 @@ export function JobCard({ job }: { job: Job }) {
         />
 
         {active ? (
-          <p className="text-[10px] text-ink-faint">
-            页面会继续跟进，不用守在电脑前
-          </p>
+          <p className="text-[10px] text-ink-faint">后台继续处理，可离开此页</p>
         ) : null}
       </div>
     </article>

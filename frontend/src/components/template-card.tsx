@@ -8,7 +8,7 @@ export function TemplateCard({ template }: { template: Template }) {
       href={`/studio/${template.id}`}
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-panel transition-colors hover:border-accent-dim/70"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-panel-raised">
+      <div className="relative aspect-[4/5] overflow-hidden bg-panel-raised">
         {/* 封面由 Java 静态资源提供，Next 只做转发 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
